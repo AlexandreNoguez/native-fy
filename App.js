@@ -1,12 +1,20 @@
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
+
+  function fofinha(fofinha) {
+    alert(fofinha)
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <View style={styles.container}>
+        <Button title='Click Me' onPress={() => fofinha("Fofinha")} />
+        <StatusBar style="dark" />
+      </View>
+    </NavigationContainer>
   );
 }
 
