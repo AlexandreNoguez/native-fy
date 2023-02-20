@@ -1,15 +1,23 @@
-import { initializeApp } from 'firebase/app'
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getApp, getApps, initializeApp } from 'firebase/app'
+import { getAuth, initializeAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, getDoc, getDocs } from 'firebase/firestore'
-import { AsyncStorage } from 'react-native'
+// import { AsyncStorage } from 'react-native'
+import {
+  API_KEY,
+  AUTH_DOMAIN,
+  PROJECT_ID,
+  STORAGE_BUCKET,
+  MESSAGING_SENDER_ID,
+  APP_ID,
+} from '@env'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCHjipSkL6rp5fwkwZk1AGaUj8pGH0GtKU",
-  authDomain: "native-fy.firebaseapp.com",
-  projectId: "native-fy",
-  storageBucket: "native-fy.appspot.com",
-  messagingSenderId: "43273843892",
-  appId: "1:43273843892:web:b21ee5e9d67f3afe2713e1"
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID
 }
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -27,6 +35,16 @@ onAuthStateChanged(auth, (user) => {
     alert("Negado")
   }
 })
+
+// if (getApps().length < 1) {
+//   firebaseApp = initializeApp(firebaseConfig);
+//   auth = initializeAuth(firebaseApp, {
+//     persistence: getReactNativePersistence(AsyncStorage),
+//   });
+// } else {
+//   firebaseApp = getApp();
+//   auth = getAuth();
+// }
 
 
 export { auth, firebaseApp }
