@@ -2,5 +2,20 @@
   "react-native": {
     "android_task_executor_maximum_pool_size": 10,
     "android_task_executor_keep_alive_seconds": 3
+  },
+  "hosting": {
+    "site": "nativefy",
+    "public": "out",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }

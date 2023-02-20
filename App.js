@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import { MainRoutes } from './src/routes/MainRoutes';
 
 export default function App() {
 
@@ -11,7 +12,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
-        <Button title='Click Me' onPress={() => fofinha("Fofinha")} />
+        <MainRoutes />
         <StatusBar style="dark" />
       </View>
     </NavigationContainer>
