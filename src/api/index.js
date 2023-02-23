@@ -1,9 +1,10 @@
-import { getApp, getApps, initializeApp } from 'firebase/app'
-import { getAuth, initializeAuth, onAuthStateChanged } from "firebase/auth";
+// import * as firebase from "firebase"
+import { getApp, getApps, initializeApp, } from 'firebase/app'
+import { getAuth, initializeAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, getDoc, getDocs } from 'firebase/firestore'
-// import { AsyncStorage } from 'react-native'
+import { AsyncStorage } from 'react-native'
 import {
-  API_KEY,
+  REACT_APP_FIREBASE_API_KEY,
   AUTH_DOMAIN,
   PROJECT_ID,
   STORAGE_BUCKET,
@@ -12,7 +13,7 @@ import {
 } from '@env'
 
 const firebaseConfig = {
-  apiKey: API_KEY,
+  apiKey: "AIzaSyCHjipSkL6rp5fwkwZk1AGaUj8pGH0GtKU",
   authDomain: AUTH_DOMAIN,
   projectId: PROJECT_ID,
   storageBucket: STORAGE_BUCKET,
@@ -27,14 +28,30 @@ const auth = getAuth(firebaseApp);
 // db.collection('playlist').getDocs();
 // const playLists = collection(db, 'playlist');
 // const snapshot = getDocs(playLists);
-
-onAuthStateChanged(auth, (user) => {
-  if (user !== null) {
-    alert("logou")
-  } else {
-    alert("Negado")
-  }
-})
+export function signUpFunc(email, password, navigation) {
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      navigation.navigate('Home', { user })
+      alert(user)
+    })
+    .catch((error) => {
+      console.error(error.code);
+      console.error(error.message);
+    });
+}
+export function signInFunc(email, password, navigation) {
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      navigation.navigate('Home')
+      alert(user)
+    })
+    .catch((error) => {
+      console.error(error.code);
+      console.error(error.message);
+    });
+}
 
 // if (getApps().length < 1) {
 //   firebaseApp = initializeApp(firebaseConfig);

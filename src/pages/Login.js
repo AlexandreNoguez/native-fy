@@ -1,42 +1,39 @@
-import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth } from '../api/index'
+import { Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
-export const Login = () => {
+import { auth, signInFunc, signUpFunc } from '../api/index'
+import logo from '../../assets/nativefydark.png'
+
+export const Login = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  const navigation = useNavigation()
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        navigation.replace("Home")
+        navigation.navigate("Home")
       }
     })
 
     return unsubscribe
   }, [])
 
-  const handleSignUp = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
-        console.log('Registered with:', user.email);
-      })
-      .catch(error => alert(error.message))
-  }
+  // const handleSignUp = () => {
+  //   auth
+  //     .createUserWithEmailAndPassword(email, password)
+  //     .then(userCredentials => {
+  //       const user = userCredentials.user;
+  //       console.log('Registered with:', user.email);
+  //     })
+  //     .catch(error => alert(error.message))
+  // }
 
+  const handleSignUp = () => {
+    navigation.navigate("Register")
+    // signUpFunc(email, password, navigation)
+  }
   const handleLogin = () => {
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
-        console.log('Logged in with:', user.email);
-      })
-      .catch(error => alert(error.message))
+    signInFunc(email, password)
   }
 
   return (
@@ -44,6 +41,7 @@ export const Login = () => {
       style={styles.container}
       behavior="padding"
     >
+      <Image style={styles.logo} source={logo} />
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -83,6 +81,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+    marginBottom: 32
   },
   inputContainer: {
     width: '80%'
